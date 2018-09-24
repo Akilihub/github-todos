@@ -3,12 +3,11 @@
  * @param {import('probot').Application} app - Probot's Application class.
  */
 module.exports = app => {
-  // Your code here
   app.log('Cheers, the app runs on a server!')
 
   app.on('push', async context => {
-    // code was push to the repo, what should we do with it?
-    app.log(context)
+    const post_issue = context.issue({body: 'Thanks for opening a repository in this account.'})
+      return context.github.issues.createComment
   })
 
   app.on('issues.opened', async context => {
