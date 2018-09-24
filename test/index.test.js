@@ -1,3 +1,8 @@
+const { Application } = require('probot')
+// Requiring our app implementation
+const myProbotApp = require('..')
+
+const issuesOpenedPayload = require('./fixtures/issues.opened.json')
 
 describe('My Probot app', () => {
   let app, github
@@ -27,4 +32,3 @@ describe('My Probot app', () => {
     expect(github.issues.createComment).toHaveBeenCalled()
   })
 })
-
