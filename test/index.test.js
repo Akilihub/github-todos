@@ -1,13 +1,3 @@
-const { Application } = require('probot')
-// Requiring our app implementation
-const myProbotApp = require('..')
-
-const issuesOpenedPayload = require('./fixtures/issues.opened.json')
-
-test('that we can run tests', () => {
-  // your real tests go here
-  expect(1 + 2 + 3).toBe(6)
-})
 
 describe('My Probot app', () => {
   let app, github
@@ -38,5 +28,3 @@ describe('My Probot app', () => {
   })
 })
 
-// For more information about testing with Jest see:
-// https://facebook.github.io/jest/
