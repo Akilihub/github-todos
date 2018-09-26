@@ -14,8 +14,9 @@
   ],
   "scripts": {
     "dev": "nodemon",
-    "start": "probot run ./index.js",
-    "lint": "standard --fix",
+    "build": "tsc",
+    "start": "npm run build && probot run ./dist/main.js",
+    "lint": "'src/**/*.tsx' 'src/**/*.ts",
     "test": "jest && standard",
     "test:watch": "jest --watch --notify --notifyMode=change --coverage"
   },
@@ -23,6 +24,7 @@
     "probot": "^7.0.0"
   },
   "devDependencies": {
+    "@types/jest": "^23.3.2",
     "jest": "^22.4.3",
     "nodemon": "^1.17.2",
     "smee-client": "^1.0.2",
@@ -37,7 +39,8 @@
     ]
   },
   "jest": {
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "preset": "ts-jest"
   },
   "nodemonConfig": {
     "exec": "npm start",
