@@ -4,3 +4,6 @@ npm-debug.log
 .env
 package-lock.json
 coverage
+.vscode
+yarn-error.log
+coverage

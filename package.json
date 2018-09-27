@@ -2,7 +2,7 @@
   "name": "probot",
   "version": "1.0.0",
   "description": "A Probot app",
-  "author": "lubegasimon <lubegasimonwalker@gmail.com>",
+  "author": "akilihub <info@akilihub.com>",
   "license": "ISC",
   "repository": "https://github.com/lubegasimon/probot.git",
   "homepage": "https://github.com/lubegasimon/probot",
@@ -15,9 +15,12 @@
   "scripts": {
     "dev": "nodemon",
     "build": "tsc",
+    "patch": "release-it -i patch -n",
+    "feature": "release-it -i minor -n",
+    "breaking": "release-it -i major -n",
     "start": "npm run build && probot run ./dist/main.js",
-    "lint": "'src/**/*.tsx' 'src/**/*.ts",
-    "test": "jest && standard",
+    "lint": "tslint -c tslint.json 'src/**/*.ts' 'test/**/*.ts'",
+    "test": "jest",
     "test:watch": "jest --watch --notify --notifyMode=change --coverage"
   },
   "dependencies": {
@@ -27,26 +30,33 @@
     "@types/jest": "^23.3.2",
     "jest": "^22.4.3",
     "nodemon": "^1.17.2",
+    "release-it": "^7.6.1",
     "smee-client": "^1.0.2",
-    "standard": "^10.0.3"
+    "ts-jest": "^23.10.2",
+    "tslint": "^5.11.0",
+    "typescript": "^3.0.3"
   },
   "engines": {
     "node": ">= 8.3.0"
   },
-  "standard": {
-    "env": [
-      "jest"
-    ]
-  },
   "jest": {
+    "transform": {
+      ".ts": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "coverageDirectory": "./coverage/",
+    "collectCoverage": true,
     "testEnvironment": "node",
-    "preset": "ts-jest"
+    "testRegex": ".*\\.test\\.ts$",
+    "moduleFileExtensions": [
+      "ts",
+      "js",
+      "json"
+    ]
   },
   "nodemonConfig": {
     "exec": "npm start",
     "watch": [
-      ".env",
-      "."
+      "src"
     ]
   }
 }
