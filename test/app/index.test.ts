@@ -1,7 +1,7 @@
 import "jest";
 import { Application } from "probot";
 // Requiring our app implementation
-import  myProbotApp  from "../src/app/main";
+import  myProbotApp  from "../../src/app/main";
 import repoCreatedPayload from "./fixtures/repos.create.json";
 
 describe("My Probot app", () => {

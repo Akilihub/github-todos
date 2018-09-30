@@ -20,15 +20,16 @@
     "breaking": "release-it -i major -n",
     "start": "npm run build && probot run ./dist/main.js",
     "lint": "tslint -c tslint.json 'src/**/*.ts' 'test/**/*.ts'",
-    "test": "jest",
+    "test": "jest ",
     "test:watch": "jest --watch --notify --notifyMode=change --coverage"
   },
   "dependencies": {
+    "esprima-extract-comments": "^1.1.0",
     "probot": "^7.0.0"
   },
   "devDependencies": {
     "@types/jest": "^23.3.2",
-    "jest": "^22.4.3",
+    "jest": "^23.6.0",
     "nodemon": "^1.17.2",
     "release-it": "^7.6.1",
     "smee-client": "^1.0.2",
