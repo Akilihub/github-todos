@@ -1,9 +1,15 @@
 declare type KeyWord = "TODO" | "FIXME";
-interface repoIssues {
+interface RepoIssues {
     commentText: string;
     lineNumber: number;
     keyWord: KeyWord;
     fileName: string;
 }
-declare function parseData(data: any): repoIssues[];
+interface GithuBlob {
+    type: string;
+    content: string;
+    path: string;
+    name: string;
+}
+declare function parseData(data: GithuBlob): RepoIssues[];
 export default parseData;

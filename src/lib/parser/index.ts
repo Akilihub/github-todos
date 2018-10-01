@@ -32,12 +32,11 @@ interface ExtractedBlob {
 
 const findWord = (str: string): KeyWord | null => {
   const wordArr = keyWords.filter(word => str.includes(word));
-  return (wordArr) ?  wordArr[0] : null;
+  return wordArr ?  wordArr[0] : null;
 };
 
 function parseData (data: GithuBlob): RepoIssues[] {
     const extractedFile: ExtractedBlob[] = extract(data.content);
-    console.log(extractedFile);
     return extractedFile
     .map( (obj: ExtractedBlob) => ({
         commentText: obj.value.replace("TODO:", " "),
