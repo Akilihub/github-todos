@@ -3,17 +3,17 @@
 exports[`parsed data tests should return modified parsed data 1`] = `
 Array [
   Object {
-    "commentText": "TODO: @aleku399 look into why this was causing bars not to show",
+    "commentText": "  @aleku399 look into why this was causing bars not to show",
     "fileName": "README.md",
-    "keyWord": "TODO:",
+    "keyWord": "TODO",
     "lineNumber": Object {
       "end": Object {
-        "column": 65,
-        "line": 1,
+        "column": 77,
+        "line": 11,
       },
       "start": Object {
-        "column": 0,
-        "line": 1,
+        "column": 12,
+        "line": 11,
       },
     },
   },
