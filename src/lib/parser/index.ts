@@ -37,7 +37,7 @@ const findWord = (str: string): KeyWord | null => {
 
 const replaceWord = (str: string): string => {
     const regex = /[TODO:FIXME:]/g;
-    return str.replace(regex, "");
+    return str.replace(regex, "").trim();
 };
 
 function parseData (data: GithuBlob): RepoIssues[] {
