@@ -3,7 +3,7 @@
 exports[`parsed data tests should return modified parsed data 1`] = `
 Array [
   Object {
-    "commentText": " @aleku399 look into why this was causing bars not to show",
+    "commentText": "@aleku399 look into why this was causing bars not to show",
     "fileName": "README.md",
     "keyWord": "TODO",
     "lineNumber": Object {
@@ -18,7 +18,7 @@ Array [
     },
   },
   Object {
-    "commentText": " alex testing 1 on the 2s",
+    "commentText": "alex testing 1 on the 2s",
     "fileName": "README.md",
     "keyWord": "FIXME",
     "lineNumber": Object {
