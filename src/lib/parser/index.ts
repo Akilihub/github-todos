@@ -35,11 +35,16 @@ const findWord = (str: string): KeyWord | null => {
   return wordArr ?  wordArr[0] : null;
 };
 
+const replaceWord = (str: string): string => {
+    const regex = /[TODO:FIXME:]/g;
+    return str.replace(regex, "");
+};
+
 function parseData (data: GithuBlob): RepoIssues[] {
     const extractedFile: ExtractedBlob[] = extract(data.content);
     return extractedFile
     .map( (obj: ExtractedBlob) => ({
-        commentText: obj.value.replace("TODO:", " "),
+        commentText: replaceWord(obj.value),
         lineNumber: obj.loc,
         keyWord: findWord(obj.value) as KeyWord,
         fileName: data.name
