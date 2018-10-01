@@ -20,6 +20,7 @@ const data = {
             //TODO: @aleku399 look into why this was causing bars not to show
             //.animated(true)
             .renderTo('#barChart');
+            //FIXME: alex testing 1 on the 2s
         // const title = new Plottable.Components.Label('Population of Countries (millions)');
     `
 };
