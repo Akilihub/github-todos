@@ -9,10 +9,12 @@ export interface openIssues {
 
 export default async function autoCreatedIssues (context: any): Promise<openIssues> {
     const octokit = context.github;
+
     const opts = {
       filter: 'subscribed', 
       state: 'open'
     }
+
     const result = await octokit.issues.getAll(opts);
-    return result.files.map(file => ( {name: file.title, url: file.number} ));
+    return result.issues.map(issue => { [ {title: issue.title}, {id: issue.number} ] });
 }

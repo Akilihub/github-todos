@@ -3,7 +3,6 @@
  * @param {import('probot').Application} app - Probot's Application class.
  */
 import getChangedFiles from "../lib/github/changedFilesList";
-import autoCreatedIssues from "../lib/github/createdIssuesList";
 
 export interface Context {
   github: any; // an object with octokit methods
@@ -26,12 +25,6 @@ export default function main (app: any): void {
       // present them as an issue object and post to github
       const postIssue: string = context.issue({body: "Thanks for opening a repository in this account."});
       return context.github.issues.createComment(postIssue);
-    });
-
-    app.on('issues.opened', async (context: Context) => {
-      const openCreatedIssues = autoCreatedIssues(context);
-      console.log('auto created issues', openCreatedIssues);
-
     });
 }
 
