@@ -3,7 +3,6 @@ dist
 .output
 .out
 .next
-lib
 build
 
 # dependencies
