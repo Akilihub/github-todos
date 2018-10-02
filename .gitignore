@@ -27,3 +27,5 @@ test/**/out
 #editors
 .idea
 .vscode
+
+*.pem
