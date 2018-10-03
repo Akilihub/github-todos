@@ -11,15 +11,15 @@ export default async function appCreatedIssues (context: any): Promise<OpenIssue
     const octokit = context.github;
 
     const opts = {
-      filter: "subscribed", 
+      filter: "subscribed",
       state: "open"
     };
 
     const result = await octokit.issues.getAll(opts);
-    return result.issues.map(issue => { 
+    return result.issues.map(issue => {
         return {
             title: issue.title,
             id: issue.number
-        } 
+        };
     });
 }
