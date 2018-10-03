@@ -1,10 +1,5 @@
 # build output
 dist
-.output
-.out
-.next
-lib
-build
 
 # dependencies
 node_modules
@@ -21,7 +16,6 @@ coverage
 # test output
 test/**/out
 .DS_Store
-.csslintrc
 
 #editors
 .idea
