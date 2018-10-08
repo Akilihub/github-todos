@@ -7,7 +7,7 @@ const list = [{
 }];
 
 describe("blob data tests", () => {
-    it("should return blob data", async () => {
+    it.skip("should return blob data", async () => {
       const _data = await fileContent(list);
       expect(_data).toMatchSnapshot();
     }, 10000);
