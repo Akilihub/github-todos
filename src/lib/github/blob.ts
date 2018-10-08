@@ -5,7 +5,7 @@ export interface Blob {
     name: string;
 }
 
-const fileContent = async (arrList): Promise<Blob[]> => {
+const getFileContent = async (arrList): Promise<Blob[]> => {
   const promises: Array<Promise<Blob>> = arrList.map( async (file) => {
     const res = await fetch(file.url);
     const textBlob = await res.text();
@@ -17,4 +17,4 @@ const fileContent = async (arrList): Promise<Blob[]> => {
   return Promise.all(promises);
 };
 
-export default fileContent;
+export default getFileContent;
