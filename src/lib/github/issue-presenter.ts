@@ -32,7 +32,7 @@ const formattedIssueComment = (data: RepoIssue[]): Issue[] => {
     return arrComments.map( (obj: IssueWithComments) => {
           return ({
             title: obj.title,
-            body: obj.comments.map( (comment: Comment) => `-[]${comment}`).join(" ")
+            body: obj.comments.map( (comment: Comment) => `-[ ]${comment}`).join(`\n`)
           });
     });
 };
