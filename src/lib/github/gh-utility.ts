@@ -4,7 +4,12 @@
 
 import { Context } from "./types";
 
-export default function getBasicRepoProps (context: Context): any {
+interface Obj {
+    owner: string;
+    repo: string;
+}
+
+export default function getBasicRepoProps (context: Context): Obj {
   const owner = context.payload.repository.owner.login;
   const repo = context.payload.repository.name;
   const fields = { owner, repo };
