@@ -18,7 +18,7 @@ const createIssueWithComments = (data: RepoIssue[]): IssueWithComments[] => {
     const singleArrObj: RepoIssue[] = groupedObj[key];
     const title = `${key}s from source code`;
     const comments = singleArrObj.map((obj: RepoIssue) =>
-      `[${obj.fileName}](${obj.url}#L${obj.lineNumber}) : ${obj.commentText}`);
+      `[${obj.fileName}](${obj.url}#L${obj.lineNumber}) : ${obj.commentText}: ${obj.keyWord} comment text by @${obj.commentAuthor}`);
     return {title, comments};
   });
 };

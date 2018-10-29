@@ -10,6 +10,7 @@ import { getAllRepoIssues } from "./repoIssuesList";
 export default async function addIssuesToRepo (context: Context, newIssues: Issue[]): Promise<void> {
   const octokit = context.github;
   const { owner, repo } = getBasicRepoProps (context);
+  const author = context.payload.repository.commit.author.name;
   const ghIssues = await getAllRepoIssues(context);
   newIssues.forEach(async ({title, body}) => {
     const currentGHIssue = find(ghIssue => ghIssue.title === title, ghIssues);
@@ -19,11 +20,13 @@ export default async function addIssuesToRepo (context: Context, newIssues: Issu
       body,
       title,
       labels: ["GH-TODO-BOT"],
+      assignees: author,
       ...(currentGHIssue ? { number: currentGHIssue.number } : {})
     };
     return currentGHIssue
       ? octokit.issues.createComment(fields)
       : octokit.issues.create(fields);
+      // : octokit.issues.addAssigneesToIssue(fields);
   });
 
 }
