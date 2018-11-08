@@ -1,6 +1,7 @@
 /**
  * API function that add comments to existing bot created issues or to new issues
  */
+
 import { find, uniq } from "ramda";
 import { getBasicRepoProps } from "./utils";
 
@@ -11,9 +12,17 @@ export default async function addIssuesToRepo (context: Context, newIssues: Issu
   const octokit = context.github;
   const { owner, repo } = getBasicRepoProps (context);
   const ghIssues = await getAllRepoIssues(context);
+
   newIssues.forEach(async ({title, body, authors}) => {
     const assignees = uniq(authors);
-    const currentGHIssue = find(ghIssue => ghIssue.title === title, ghIssues);
+
+    /**
+     * Am up to writing a function that removes checked out or no longer existing issue comments.
+     */
+
+    const currentGHIssueComments = find(ghIssueComment => ghIssueComment.comments === body, ghIssues);
+    const newGHIssueComments = currentGHIssueComments.comments.includes(" - [x] ") || !(currentGHIssueComments.comments === body) ? replaceCommentArray(currentGHIssueComments.comments, body) : currentGHIssueComments.comments;
+
     const fields = {
       owner,
       repo,
@@ -21,11 +30,17 @@ export default async function addIssuesToRepo (context: Context, newIssues: Issu
       title,
       labels: ["GH-TODO-BOT"],
       assignees,
-      ...(currentGHIssue ? { number: currentGHIssue.number } : {})
+      ...(currentGHIssueComments ?  {number: currentGHIssueComments.number, comments: newGHIssueComments } : {})
     };
-    return currentGHIssue
+
+    return currentGHIssueComments
       ? octokit.issues.createComment(fields)
       : octokit.issues.create(fields);
   });
 
+}
+
+function replaceCommentArray(arr1: string[], arr2: any): string[] {
+  // TODO: could we find means of using the precise `type` for `arr2` probably `string[]` than `any` without `body` in line (24, 186) showing error?
+  return arr1.splice(0, arr1.length - 1, ...arr2);
 }
