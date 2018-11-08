@@ -16,31 +16,29 @@ export default async function addIssuesToRepo (context: Context, newIssues: Issu
   newIssues.forEach(async ({title, body, authors}) => {
     const assignees = uniq(authors);
 
-    /**
-     * Am up to writing a function that removes checked out or no longer existing issue comments.
-     */
-
-    const currentGHIssueComments = find(ghIssueComment => ghIssueComment.comments === body, ghIssues);
-    const newGHIssueComments = currentGHIssueComments.comments.includes(" - [x] ") || !(currentGHIssueComments.comments === body) ? replaceCommentArray(currentGHIssueComments.comments, body) : currentGHIssueComments.comments;
+    const currentGHIssue = find(ghIssue => ghIssue.title === title, ghIssues);
+    const newGHIssueComments = currentGHIssue.comments.includes("- [x]") || !(currentGHIssue.comments === body)
+     ? newIssueBody(currentGHIssue.comments, body)
+     : currentGHIssue.comments;
 
     const fields = {
       owner,
       repo,
-      body,
+      newGHIssueComments,
       title,
       labels: ["GH-TODO-BOT"],
       assignees,
-      ...(currentGHIssueComments ?  {number: currentGHIssueComments.number, comments: newGHIssueComments } : {})
+      ...(currentGHIssue ? { number: currentGHIssue.number } : {})
     };
 
-    return currentGHIssueComments
+    return currentGHIssue
       ? octokit.issues.createComment(fields)
       : octokit.issues.create(fields);
   });
 
 }
 
-function replaceCommentArray(arr1: string[], arr2: any): string[] {
-  // TODO: could we find means of using the precise `type` for `arr2` probably `string[]` than `any` without `body` in line (24, 186) showing error?
-  return arr1.splice(0, arr1.length - 1, ...arr2);
+function newIssueBody(currentIssueBody: string[], newIssueBody: any): string[] {
+  // TODO: could we find means of using the precise `type` for `arr2` probably `string[]` than `any` ?
+  return currentIssueBody.splice(0, currentIssueBody.length - 1, ...newIssueBody);
 }
