@@ -8,7 +8,7 @@ export interface Context {
 
 export interface Issue {
   title: string;
-  body: string | string[];
+  body: string;
   authors: string[];
 }
 

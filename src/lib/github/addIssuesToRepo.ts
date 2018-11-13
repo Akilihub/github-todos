@@ -17,14 +17,15 @@ export default async function addIssuesToRepo (context: Context, newIssues: Issu
     const assignees = uniq(authors);
 
     const currentGHIssue = find(ghIssue => ghIssue.title === title, ghIssues);
-    const newGHIssueComments = currentGHIssue.comments.includes("- [x]") || !(currentGHIssue.comments === body)
-     ? newIssueBody(currentGHIssue.comments, body)
-     : currentGHIssue.comments;
+    const currentCommentBody = stringifyCommentsArray(currentGHIssue.comments);
+    const newGHIssueComments = !(currentCommentBody === body)
+     ? newIssueBody(currentCommentBody, body)
+     : currentCommentBody;
 
     const fields = {
       owner,
       repo,
-      newGHIssueComments,
+      body: newGHIssueComments,
       title,
       labels: ["GH-TODO-BOT"],
       assignees,
@@ -38,7 +39,11 @@ export default async function addIssuesToRepo (context: Context, newIssues: Issu
 
 }
 
-function newIssueBody(currentIssueBody: string[], newIssueBody: any): string[] {
-  // TODO: could we find means of using the precise `type` for `arr2` probably `string[]` than `any` ?
-  return currentIssueBody.splice(0, currentIssueBody.length - 1, ...newIssueBody);
+function stringifyCommentsArray (commentsArray: string[]): string {
+  return commentsArray.join("\n");
+}
+
+function newIssueBody(currentIssueBody: string, newIssueBody: string): string {
+  const regex = /currentIssueBody/gi;
+  return currentIssueBody.replace(regex, newIssueBody);
 }
