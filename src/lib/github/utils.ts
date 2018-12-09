@@ -3,9 +3,8 @@
  */
 import { groupBy, flatten, prop } from "ramda";
 
-import { Context, Issue, RepoProps, GHIssue } from "./types";
+import { Context, Issue, RepoProps, GHIssue, ModifiedFile, File } from "./types";
 import { RepoIssue } from "../parser";
-
 
 export function getBasicRepoProps (context: Context): RepoProps {
   const owner = context.payload.repository.owner.login;
@@ -44,4 +43,30 @@ export function mergeFileRepoIssues(repoIssues: RepoIssue[][]): RepoIssue[] {
   const issueGroupsList: RepoIssue[][] =
       Object.keys(groupedByIssueType).map(key => groupedByIssueType[key]);
   return flatten<RepoIssue>(issueGroupsList);
+}
+
+export function getModifiedFiles(octokit, array, owner, repo): Promise<ModifiedFile[]> {
+  const modifiedFiles: Array<Promise<ModifiedFile>> = array.data.files.map(async(file) => {
+  const name = file.filename;
+  const content = await octokit.repos.getContent({owner, repo, path: name});
+  return { name, htmlUrl: content.data.html_url, downloadUrl: content.data.download_url};
+});
+  return Promise.all(modifiedFiles);
+}
+
+export async function getfileName(
+  octokit,
+  owner: string,
+  repo: string,
+  sha: string
+): Promise<File> {
+ const objFiles = await octokit.gitdata.getTree({owner, repo, sha});
+ if (!objFiles) return;
+ return objFiles.tree.map( async (obj) => {
+  if (obj.type !== "tree") {
+    return {name: obj.path, downloadUrl: obj.url};
+      } else {
+    return await getfileName(octokit, owner, repo, obj.sha);
+    }
+  });
 }

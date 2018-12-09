@@ -22,3 +22,15 @@ export interface GHIssue {
   number: number;
   title: string;
 }
+
+export interface ModifiedFile {
+  name: string;
+  downloadUrl: string;
+  htmlUrl: string;
+  author: string;
+}
+
+export interface File {
+  name: string;
+  downloadUrl: string;
+}
